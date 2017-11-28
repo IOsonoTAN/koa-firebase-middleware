@@ -1,0 +1,43 @@
+{
+  "name": "koa-firebase-middleware",
+  "version": "0.0.1",
+  "description": "A simple middleware for authentication by Firebase",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IOsonoTAN/koa-firebase-middleware.git"
+  },
+  "keywords": [
+    "koa",
+    "firebase"
+  ],
+  "author": "IOsonoTAN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IOsonoTAN/koa-firebase-middleware/issues"
+  },
+  "homepage": "https://github.com/IOsonoTAN/koa-firebase-middleware#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "firebase-admin": "^5.5.1",
+    "koa": "^2.4.1",
+    "koa-router": "^7.3.0",
+    "moment": "^2.19.2",
+    "mongodb": "^2.2.33",
+    "nodemon": "^1.12.1",
+    "redis": "^2.8.0",
+    "sprintf-js": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
