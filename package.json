@@ -1,6 +1,6 @@
 {
   "name": "koa-firebase-middleware",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple middleware for authentication by Firebase",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "firebase-admin": "^5.5.1",
+    "lodash": "^4.17.4",
     "moment": "^2.19.2",
     "mongodb": "^2.2.33",
     "redis": "^2.8.0",
