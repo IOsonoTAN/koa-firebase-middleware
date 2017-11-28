@@ -17,11 +17,11 @@ npm install koa-firebase-middleware
 To use this library you have to start MongoDB  and Redis server before, Redis for caching the token and expiry time and MongoDB for store fid and insert a new user.
 
 ### Implement with Koa
-The middieware is a middleware in Koa.js only support in version 2.
+This library is a middleware in Koa.js only support in version 2.
 
 ## Usage
 
-Will show an example and how to use this middileware in CommonJS.
+Will show an example and how to use this library in CommonJS.
 
 1. You have to require Koa, Koa-router and this lib.
 ```javascript
@@ -102,7 +102,7 @@ app.listen(3000, () => {
 })
 ```
 ## Customize
-This middleware support custom any fields in object, by the way we provide default values for using like this:
+this library is support custom to any fields in init option's object, by the way we provide default values for using like this:
 ```javascript
 {
   credential: null,
