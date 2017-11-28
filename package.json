@@ -22,6 +22,9 @@
     "url": "https://github.com/IOsonoTAN/koa-firebase-middleware/issues"
   },
   "homepage": "https://github.com/IOsonoTAN/koa-firebase-middleware#readme",
+  "engines": {
+    "node": "> 7.0.0"
+  },
   "dependencies": {
     "bluebird": "^3.5.1",
     "firebase-admin": "^5.5.1",
