@@ -13,7 +13,8 @@
   },
   "keywords": [
     "koa",
-    "firebase"
+    "firebase",
+    "middleware"
   ],
   "author": "IOsonoTAN",
   "license": "MIT",
@@ -24,11 +25,8 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "firebase-admin": "^5.5.1",
-    "koa": "^2.4.1",
-    "koa-router": "^7.3.0",
     "moment": "^2.19.2",
     "mongodb": "^2.2.33",
-    "nodemon": "^1.12.1",
     "redis": "^2.8.0",
     "sprintf-js": "^1.1.1"
   },
