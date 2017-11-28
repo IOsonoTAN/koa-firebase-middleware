@@ -130,9 +130,9 @@ You can custom any field in above just create an object and put it in `init` see
 ```javascript
 firebaseAuth.init({
   credential: require('./key.json'),
-  databaseURL: 'https://seven-eleven-dev.firebaseio.com',
+  databaseURL: 'https://traova.firebaseio.com',
   mongo: {
-    url: 'mongodb://docker:27010/ciao_mondo',
+    url: 'mongodb://docker:27010/traova',
     userCollection: '_users',
     fields: {
       authFirebase: '_auth_firebase',
@@ -142,16 +142,16 @@ firebaseAuth.init({
   }
 })
 ```
-I did custom in mongo section, set url to connect to docker on port 27010, database name "ciao_mondo", connection to user collection named "_users" and store custom fields.
+I did custom in mongo section, set url to connect to docker on port 27010, database name "traova", connection to user collection named "_users" and store custom fields.
 
 It should be store into you MongoDB like this:
 ```javascript
 {
-	"_id" : ObjectId("5a1d10cf5b5f4c85e5f2477f"),
-	"_auth_firebase": {
-		"firebase_id": "AfBru1sf5b5f4c85e5f10Sd9"
-    },
-    "_created_at": ISODate("2017-11-28T14:31:27.138+0700")
+  "_id" : ObjectId("5a1d10cf5b5f4c85e5f2477f"),
+  "_auth_firebase": {
+    "firebase_id": "AfBru1sf5b5f4c85e5f10Sd9"
+  },
+  "_created_at": ISODate("2017-11-28T14:31:27.138+0700")
 }
 ```
 
