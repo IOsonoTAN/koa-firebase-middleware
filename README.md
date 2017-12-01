@@ -23,7 +23,7 @@ This library is a middleware in Koa.js only support in version 2.
 
 Will show an example and how to use this library in CommonJS.
 
-1. You have to require Koa, Koa-router and this lib.
+1) You have to require Koa, Koa-router and this lib.
 ```javascript
 const Koa = require('koa')
 const Router = require('koa-router')
@@ -31,7 +31,7 @@ const firebaseAuth = require('koa-firebase-middleware')
 ...
 ```
 
-2. Create new Koa application and using Koa router.
+2) Create new Koa application and using Koa router.
 ```javascript
 ...
 const app = new Koa()
@@ -39,7 +39,7 @@ const router = new Router()
 ...
 ```
 
-3. Create initialize for middleware and prepaid datas from Firebase.
+3) Create initialize for middleware and prepaid datas from Firebase.
 
 Where can i get it? Going to [Firebase Admin SDK (https://console.firebase.google.com/project/{YOU_PROJECT_ID}/settings/serviceaccounts/adminsdk)](https://console.firebase.google.com/project/.../settings/serviceaccounts/adminsdk)
 
@@ -55,9 +55,16 @@ firebaseAuth.init({
 ...
 ```
 
-4. Create a router and listen the application with one middleware `firebaseAuth.verifyAccessToken` and these keys are require in headers.
+4) Create a router and listen the application with one middleware `firebaseAuth.verifyAccessToken` and these keys are require in headers.
+```json
+{
+	"Authorization": "ACCESS_TOKEN_FROM_FIREBASE",
+	"FID": "FIREBOASE_FROM_FIREBASE"
+}
+```
 * `Authorization` is access token from Firebase.
 * `FID` is unique id from Firebase.
+
 ```javascript
 ...
 router.get('/', firebaseAuth.verifyAccessToken, (ctx, next) => {
