@@ -80,6 +80,15 @@ app.listen(3000, () => {
 })
 ```
 
+If you want to use `ctx.user` that datas from Redis, you just add `passUserContext` method to be middleware like this:
+```javascript
+...
+router.get('/users/currently-logged', firebaseAuth.passUserContext, (ctx, next) => {
+  ctx.body = 'Welcome to Firebase Middleware'
+})
+```
+* The `passUserContext` method will not checking on Firebase Database and will not throw "Unauthorized"
+
 ## Example
 This an example for basic authorization with Firebase, simple and very easy to use it.
 
