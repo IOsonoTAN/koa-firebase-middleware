@@ -26,14 +26,20 @@ const init = (_options = {}) => {
   })
 }
 
+const connectRedis = async () => {
+  redisClient = await redis.createClient({
+    url: options.redis.url
+  })
+
+  return redisClient
+}
+
 const verifyAccessToken = async (ctx, next) => {
   try {
     const accessToken = getAccessToken(ctx)
     const fid = getFID(ctx)
 
-    redisClient = await redis.createClient({
-      url: options.redis.url
-    })
+    redisClient = await connectRedis()
     const getRedisKey = sprintf(options.redis.storeKey, {
       fid
     })
@@ -88,10 +94,23 @@ const verifyAccessToken = async (ctx, next) => {
   }
 }
 
-const moduleExports = {
-  init,
-  verifyAccessToken
+const passUserContext = async (ctx, next) => {
+  const fid = getFID(ctx)
+  redisClient = await connectRedis()
+  const getRedisKey = sprintf(options.redis.storeKey, {
+    fid
+  })
+  const redisValue = await redisClient.getAsync(getRedisKey)
+  if (redisValue) {
+    ctx.user = JSON.parse(redisValue)
+    return next()
+  }
 }
 
-exports.default = moduleExports
+const moduleExports = {
+  init,
+  verifyAccessToken,
+  passUserContext
+}
+
 module.exports = moduleExports
