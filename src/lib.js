@@ -103,8 +103,8 @@ const passUserContext = async (ctx, next) => {
   const redisValue = await redisClient.getAsync(getRedisKey)
   if (redisValue) {
     ctx.user = JSON.parse(redisValue)
-    return next()
   }
+  return next()
 }
 
 const moduleExports = {
