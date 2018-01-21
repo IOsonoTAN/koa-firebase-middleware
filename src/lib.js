@@ -1,13 +1,22 @@
-const { merge } = require('lodash')
+const {
+  merge
+} = require('lodash')
 const admin = require('firebase-admin')
 const bluebird = require('bluebird')
 const moment = require('moment')
 const redis = require('redis')
-const { sprintf } = require('sprintf-js')
-const { MongoClient } = require('mongodb')
+const {
+  sprintf
+} = require('sprintf-js')
+const {
+  MongoClient
+} = require('mongodb')
 
 const options = require('./options')
-const { getAccessToken, getFID } = require('./helpers')(options)
+const {
+  getAccessToken,
+  getFID
+} = require('./helpers')(options)
 
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
@@ -16,6 +25,17 @@ const datetimeFormat = 'MM/DD/YYYY HH:mm:ss'
 let redisClient
 let User
 let userInfo
+
+const handleError = (ctx, e) => {
+  const status = (!e.statusCode ? 400 : e.statusCode)
+
+  ctx.status = status
+  ctx.body = {
+    error: e.message
+  }
+
+  return true
+}
 
 const init = (_options = {}) => {
   merge(options, _options)
@@ -52,7 +72,8 @@ const verifyAccessToken = async (ctx, next) => {
     const db = await MongoClient.connect(options.mongo.url)
     User = db.collection(options.mongo.userCollection)
 
-    const authData = await admin.auth().verifyIdToken(accessToken)
+    const authData = await admin.auth()
+      .verifyIdToken(accessToken)
     if (authData.uid !== fid) {
       const e = new Error('Unauthorized.')
       e.statusCode = 401
@@ -62,7 +83,8 @@ const verifyAccessToken = async (ctx, next) => {
     const redisKey = sprintf(options.redis.storeKey, {
       fid: authData.uid
     })
-    const nowTime = moment(moment().format(datetimeFormat), datetimeFormat)
+    const nowTime = moment(moment()
+      .format(datetimeFormat), datetimeFormat)
     const expTime = moment.unix(authData.exp, datetimeFormat)
     const redisTTL = Math.round(((expTime.diff(nowTime) / 1000) / 60) * 60)
 
@@ -95,16 +117,27 @@ const verifyAccessToken = async (ctx, next) => {
 }
 
 const passUserContext = async (ctx, next) => {
-  const fid = getFID(ctx)
-  redisClient = await connectRedis()
-  const getRedisKey = sprintf(options.redis.storeKey, {
-    fid
-  })
-  const redisValue = await redisClient.getAsync(getRedisKey)
-  if (redisValue) {
-    ctx.user = JSON.parse(redisValue)
+  try {
+    const fid = getFID(ctx, {
+      skipThrowError: true
+    })
+    if (!fid) {
+      return next()
+    }
+
+    redisClient = await connectRedis()
+    const redisStoreKey = sprintf(options.redis.storeKey, {
+      fid
+    })
+    const redisValue = await redisClient.getAsync(redisStoreKey)
+    if (redisValue) {
+      ctx.user = JSON.parse(redisValue)
+    }
+
+    return next()
+  } catch (e) {
+    return handleError(ctx, e)
   }
-  return next()
 }
 
 const moduleExports = {
