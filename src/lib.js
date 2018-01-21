@@ -112,7 +112,7 @@ const verifyAccessToken = async (ctx, next) => {
 
     return next()
   } catch (e) {
-    ctx.throw((!e.statusCode ? 400 : e.statusCode), e.message)
+    return handleError(ctx, e)
   }
 }
 
