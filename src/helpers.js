@@ -11,7 +11,7 @@ const lower = (string) => string.toLowerCase()
 const getAccessToken = (ctx) => {
   const accessToken = ctx.request.header[lower(options.header.tokenKey)]
   if (!accessToken) {
-    throwError(lower('Header key "' + options.header.tokenKey + '" is required field.'), 401)
+    throwError(lower('Header key "' + options.header.tokenKey + '" is required field.'))
   }
   const splitted = accessToken.split(' ')
 
@@ -22,7 +22,7 @@ const getFID = (ctx, fnOptions = {}) => {
   const fid = ctx.request.header[lower(options.header.fidKey)]
 
   if (!fid && fnOptions.skipThrowError === false) {
-    throwError(lower('Header key "' + options.header.fidKey + '" is required field.'), 401)
+    throwError(lower('Header key "' + options.header.fidKey + '" is required field.'))
   }
 
   return fid || null
