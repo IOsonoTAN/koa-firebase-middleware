@@ -15,7 +15,9 @@ const {
 const options = require('./options')
 const {
   getAccessToken,
-  getFID
+  getFID,
+  throwError,
+  lower
 } = require('./helpers')(options)
 
 bluebird.promisifyAll(redis.RedisClient.prototype)
@@ -27,7 +29,7 @@ let User
 let userInfo
 
 const handleError = (ctx, e) => {
-  const status = (!e.statusCode ? 400 : e.statusCode)
+  const status = (!e.statusCode ? 401 : e.statusCode)
 
   ctx.status = status
   ctx.body = {
@@ -78,9 +80,7 @@ const verifyAccessToken = async (ctx, next) => {
     const authData = await admin.auth()
       .verifyIdToken(accessToken)
     if (authData.uid !== fid) {
-      const e = new Error('Unauthorized.')
-      e.statusCode = 401
-      throw e
+      throwError(lower('Unauthorized.'), 401)
     }
 
     const redisKey = sprintf(options.redis.storeKey, {

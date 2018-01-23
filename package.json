@@ -1,6 +1,6 @@
 {
   "name": "koa-firebase-middleware",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A simple middleware for authentication by Firebase",
   "main": "src/lib.js",
   "scripts": {

@@ -1,11 +1,17 @@
 let options
 
+const throwError = (message, statusCode = 400) => {
+  const e = new Error(message)
+  e.statusCode = statusCode
+  throw e
+}
+
 const lower = (string) => string.toLowerCase()
 
 const getAccessToken = (ctx) => {
   const accessToken = ctx.request.header[lower(options.header.tokenKey)]
   if (!accessToken) {
-    throw new Error(lower('Header key "' + options.header.tokenKey + '" is required field.'))
+    throwError(lower('Header key "' + options.header.tokenKey + '" is required field.'), 401)
   }
   const splitted = accessToken.split(' ')
 
@@ -16,7 +22,7 @@ const getFID = (ctx, fnOptions = {}) => {
   const fid = ctx.request.header[lower(options.header.fidKey)]
 
   if (!fid && fnOptions.skipThrowError === false) {
-    throw new Error(lower('Header key "' + options.header.fidKey + '" is required field.'))
+    throwError(lower('Header key "' + options.header.fidKey + '" is required field.'), 401)
   }
 
   return fid || null
@@ -26,6 +32,7 @@ module.exports = (_options) => {
   options = _options
 
   return {
+    throwError,
     lower,
     getAccessToken,
     getFID
