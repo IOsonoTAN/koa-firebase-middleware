@@ -31,7 +31,10 @@ const handleError = (ctx, e) => {
 
   ctx.status = status
   ctx.body = {
-    error: e.message
+    error: {
+      status,
+      message: e.message
+    }
   }
 
   return true
