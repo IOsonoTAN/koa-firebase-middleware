@@ -95,7 +95,7 @@ const verifyAccessToken = async (ctx, next) => {
       [`${options.mongo.fields.authFirebase}.${options.mongo.fields.fid}`]: fid
     })
 
-    if (userInfo.length === 0) {
+    if (!userInfo) {
       userInfo = await User.insert({
         [options.mongo.fields.authFirebase]: {
           [options.mongo.fields.fid]: fid
